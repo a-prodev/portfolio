@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
+import getS3Url from "@/lib/getS3Url";
+
 function clsx(...args: any) {
 	return args.filter(Boolean).join(" ");
 }
@@ -96,12 +98,14 @@ const components = {
 		/>
 	),
 	img: ({
+		src,
 		className,
 		alt,
 		...props
 	}: React.ImgHTMLAttributes<HTMLImageElement>) => (
 		// eslint-disable-next-line @next/next/no-img-element
 		<img
+			src={src?.includes('/') ? src : getS3Url(src)}
 			className={clsx("rounded-md border border-zinc-200", className)}
 			alt={alt}
 			{...props}
