@@ -1,21 +1,22 @@
-import "../global.css";
+import "@/global.css";
 import { Inter } from "@next/font/google";
 import LocalFont from "@next/font/local";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
+import { i18n } from '@/i18n-config'
 
 export const metadata: Metadata = {
   title: {
     default: "prodev",
     template: "%s | prodev",
   },
-  description: "Co-founder of unkey.dev and founder of planetfall.io",
+  description: "Web Developer",
   openGraph: {
-    title: "chronark.com",
+    title: "prodev",
     description:
-      "Co-founder of unkey.dev and founder of planetfall.io",
-    url: "https://chronark.com",
-    siteName: "chronark.com",
+      "Web Developer",
+    url: "https://aprodev.com.br",
+    siteName: "aprodev.com.br",
     images: [
       {
         url: "https://chronark.com/og.png",
@@ -38,30 +39,37 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Chronark",
+    title: "Prodev",
     card: "summary_large_image",
   },
   icons: {
     shortcut: "/favicon.png",
   },
 };
+
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }))
+}
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
 const calSans = LocalFont({
-  src: "../public/fonts/CalSans-SemiBold.ttf",
+  src: "../../public/fonts/CalSans-SemiBold.ttf",
   variable: "--font-calsans",
 });
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { lang: string }
 }) {
   return (
-    <html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
+    <html lang={params.lang} className={[inter.variable, calSans.variable].join(" ")}>
       <head>
         <Analytics />
       </head>

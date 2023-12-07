@@ -2,12 +2,21 @@ import Link from "next/link";
 import React from "react";
 import Particles from "./components/particles";
 
+import { getDictionary } from "@/get-dictionary";
+import { Locale } from "@/i18n-config";
+
 const navigation = [
 	{ name: "Projects", href: "/projects" },
 	{ name: "Contact", href: "/contact" },
 ];
 
-export default function Home() {
+export default async function Home({
+	params: { lang }
+}: {
+	params: { lang: Locale }
+}) {
+	const dictionary = await getDictionary(lang)
+
 	return (
 		<div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
 			<nav className="my-16 animate-fade-in">
@@ -35,7 +44,7 @@ export default function Home() {
 			<div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
 			<div className="my-16 text-center animate-fade-in">
 				<h2 className="text-sm text-zinc-500 ">
-					Hi, my name is José Pedro, I build web solutions using modern tools.
+					{dictionary['pages'].welcome}
 				</h2>
 			</div>
 		</div>
