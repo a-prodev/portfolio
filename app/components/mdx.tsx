@@ -105,7 +105,7 @@ const components = {
 	}: React.ImgHTMLAttributes<HTMLImageElement>) => (
 		// eslint-disable-next-line @next/next/no-img-element
 		<img
-			src={src?.includes('/') ? src : getS3Url(src)}
+			src={src?.startsWith('s3:') ? getS3Url(src) : src}
 			className={clsx("rounded-md border border-zinc-200", className)}
 			alt={alt}
 			{...props}
